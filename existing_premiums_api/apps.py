@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class ExistingPremimumsConfig(AppConfig):
+class ExistingPremiumsApiConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'existing_premimums'
+    name = 'existing_premiums_api'
