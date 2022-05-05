@@ -8,3 +8,7 @@ class DocumentUpload(models.Model):
                                 validators=[FileExtensionValidator(["csv"])],
                                 )
     has_been_converted = models.BooleanField(default=False)
+
+    def __str__(self):
+
+        return self.document.name.split("/")[-1]
