@@ -15,5 +15,5 @@ part of the project. In essence, the client wrote the project in psuedo code fir
 
 ## BASE INSTRUCTIONS
 Each section of the application will be planned out in pseudo code first. The two key objectives are as follows.
-  # Build an example api that holds insurance data (This repository)
-  # Build a seperate application that retrieves data to train an ML model to predict an insurance premium, allowing a user to predict their premium.
+  Build an example api that holds insurance data (This repository)
+  Build a seperate application that retrieves data to train an ML model to predict an insurance premium, allowing a user to predict their premium.
