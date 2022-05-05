@@ -8,26 +8,12 @@
     <div class="col-xs-12 col-md-4">
 
     </div>
-    <div class="col-xs-12 col-md-4 my-4 my-auto">
-      <a class="btn btn-lg btn-primary my-2 w-100 p-2" href="#">Explore the API</a>
-      <a class="btn btn-lg btn-primary my-2 w-100 p-2" href="{% url 'upload' %}">Add to the API by uploading a document</a>
-      <a class="btn btn-lg btn-primary my-2 w-100 p-2" href="#">Go to example-insurance-ml.co.uk</a>
-    </div>
+    {% include "navigation_button_col.html" %}
     <div class="col-xs-12 col-md-4">
 
     </div>
 
 </div>
-    <!-- <div class="row align-items-center h-100">
 
-      <div class="col-xs-12 col-md-6 mx-auto">
-        <button class="btn btn-primary my-2 w-100 h-25 p-2" href="#">Explore the API</button>
-        <button class="btn btn-primary my-2 w-100 h-25 p-2" href="#">Add to the API by uploading a document</button>
-        <button class="btn btn-primary my-2 w-100 h-25 p-2" href="#">Go to example_insurance_machinelearning.com</button>
-
-      </div>
-
-
-    </div> -->
 
 {% endblock content %}
