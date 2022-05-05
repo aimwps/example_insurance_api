@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex flex-column min-vh-100 justify-content-center align-items-center p-3">
+  <div class="col-xs-12 col-md-4 mt-auto mb-4">
+    <label for="id_document" class="form-label mt-4">Uploaded files that require processing</label>
+    <select class="form-select" aria-label="Default select example">
+      {% for document in unprocessed_uploads %}
+      {% if forloop.counter0 == 0 %}
+        <option value="{{document.id}}" selected>{{document}}</option>
+        {% else %}
+        <option value="{{document.id}}"">{{document}}</option>
+        {% endif %}
+      {% endfor %}
+      </select>
+    <button class="btn w-100 my-2" type="submit" name="button">Process & push</button>
+
+    </div>
+    <div class="col-xs-12 col-md-4 mt-auto mb-4">
+        <div class="form-group">
+          <form method="POST">
+            {% csrf_token %}
+            {{ form.errors }}
+            <label for="id_document" class="form-label mt-4">Select a file to upload</label>
+            <input class="form-control mb-4" type="file" name="document" id="id_document">
+            <button class="btn w-100 my-2" type="submit" name="button">Upload</button>
+            </form>
+          </div>
+      </div>
+    <div class="col-xs-12 col-md-4 mt-auto">
+      <a class="btn btn-lg btn-primary my-2 w-100 p-2" href="#">Explore the API</a>
+      <a class="btn btn-lg btn-primary my-2 w-100 p-2" href="#">Add to the API by uploading a document</a>
+      <a class="btn btn-lg btn-primary my-2 w-100 p-2" href="#">Go to example-insurance-ml.co.uk</a>
+    </div>
+</div>
+{% endblock content %}
