@@ -22,4 +22,4 @@ class ExistingMedicalPremium(models.Model):
     rf_children = models.PositiveIntegerField()
     rf_is_smoker = models.BooleanField()
     rf_region = models.CharField(max_length=255, choices=region_choices)
-    premium = models.DecimalField(max_digits=10, decimal_places=2, validators=[MinValueValidator(0.00), ], )
+    premium = models.DecimalField(max_digits=13, decimal_places=2)

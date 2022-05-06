@@ -4,6 +4,39 @@ from .models import DocumentUpload
 from .forms import DocumentUploadForm
 from django.http import HttpResponseRedirect, JsonResponse
 from .processing_toolkit import check_csv_eligibility
+from existing_premiums_api.models import ExistingMedicalPremium
+import pandas as pd
+from decimal import Decimal
+
+def create_entries_from_csv(csv):
+    df = pd.read_csv(csv)
+
+    # Drop any missing data
+    df = df.dropna()
+
+    # Change any yes or nos to booleans
+    df['smoker'] = df['smoker'].replace({"yes":True, "Yes":True, "no": False, "No":False})
+
+
+    # With the remaning data, add it to the database.
+    for entry in df.iterrows():
+        print(entry[1].expenses)
+        expense = 1
+        print(expense)
+        new_entry = ExistingMedicalPremium(
+                                rf_age=entry[1].age,
+                                rf_gender=entry[1]['sex'],
+                                rf_bmi=entry[1]['bmi'],
+                                rf_children=entry[1]['children'],
+                                rf_is_smoker=entry[1]['smoker'],
+                                rf_region=entry[1]['region'],
+                                premium=expense,
+                                )
+        new_entry.save()
+    return {}
+
+
+
 class LandingPageView(TemplateView):
     template_name = "landing_page.html"
 
@@ -38,9 +71,14 @@ def GetDocumentStatusAjax(request):
         status = check_csv_eligibility(object.document)
 
         # If column names are incorrect, delete the upload
-        if not status['column_names']['complete']:
+        if not status['complete']:
             object.delete()
 
 
 
         return JsonResponse(status, safe=False)
+def AddCheckedDocumentAjax(request):
+    object_id = request.POST.get("document_id")
+    object = DocumentUpload.objects.get(id=object_id)
+    status = create_entries_from_csv(object.document)
+    return JsonResponse({"success": "success"}, safe=False)
