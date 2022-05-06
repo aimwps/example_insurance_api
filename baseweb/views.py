@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, View
 from .models import DocumentUpload
 from .forms import DocumentUploadForm
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
+from .processing_toolkit import check_csv_eligibility
 class LandingPageView(TemplateView):
     template_name = "landing_page.html"
 
@@ -18,15 +19,10 @@ class UploadPageView(View):
 
     def post(self, request):
         if request.method == "POST":
-            print(request.POST)
             form = DocumentUploadForm(request.POST, request.FILES)
             if form.is_valid():
-                print("valid")
                 form.save()
             else:
-
-                print(form)
-                print("Invalid Form")
                 context = {}
                 context['unprocessed_uploads'] = DocumentUpload.objects.filter(has_been_converted=False)
                 context['form'] = form
@@ -34,3 +30,17 @@ class UploadPageView(View):
 
 
             return redirect('/uploads/')
+
+def GetDocumentStatusAjax(request):
+    if request.method == "GET":
+        object_id = request.GET.get("document_id")
+        object = DocumentUpload.objects.get(id=object_id)
+        status = check_csv_eligibility(object.document)
+
+        # If column names are incorrect, delete the upload
+        if not status['column_names']['complete']:
+            object.delete()
+
+
+
+        return JsonResponse(status, safe=False)
