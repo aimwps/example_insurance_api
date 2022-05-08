@@ -18,7 +18,7 @@ def check_data(series, column_name):
                 "region": "str",
                 "expenses": np.float64}
 
-    print(f"actual {column_name} dtype = {series.dtype}")
+
     # Compare if the object read from the CSV is of the right data type
     if series.dtype != data_types[column_name]:
         try:

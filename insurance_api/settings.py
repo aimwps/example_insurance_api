@@ -28,6 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 10000
 
 # Application definition
 

@@ -20,17 +20,16 @@ def create_entries_from_csv(csv):
 
     # With the remaning data, add it to the database.
     for entry in df.iterrows():
-        print(entry[1].expenses)
-        expense = 1
-        print(expense)
+        entry_data = entry[1]
+
         new_entry = ExistingMedicalPremium(
-                                rf_age=entry[1].age,
-                                rf_gender=entry[1]['sex'],
-                                rf_bmi=entry[1]['bmi'],
-                                rf_children=entry[1]['children'],
-                                rf_is_smoker=entry[1]['smoker'],
-                                rf_region=entry[1]['region'],
-                                premium=expense,
+                                rf_age = entry_data.age,
+                                rf_gender = entry_data.sex,
+                                rf_bmi = entry_data.bmi,
+                                rf_children = entry_data.children,
+                                rf_is_smoker = entry_data.smoker,
+                                rf_region = entry_data.region,
+                                premium = entry_data.expenses,
                                 )
         new_entry.save()
     return {}
